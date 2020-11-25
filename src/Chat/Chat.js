@@ -27,13 +27,25 @@ class Chat extends Component {
     }, 1000);
   }
 
+  Message = (e) => {
+    // eslint-disable-next-line react/no-access-state-in-setstate
+    const messages = [...this.state.messages, e];
+    const defaultMessage = answersData.find((answer) => answer.tags.includes(e.text));
+    if (defaultMessage) {
+      messages.push(defaultMessage);
+    }
+    this.setState({
+      messages,
+    });
+  };
+
   render() {
     const { shop, messages } = this.state;
     return (
       <main className="Chat">
         <ChatHeader shop={shop} />
         <ChatBox messages={messages} />
-        <ChatInput />
+        <ChatInput addMessage={this.Message()} />
       </main>
     );
   }
